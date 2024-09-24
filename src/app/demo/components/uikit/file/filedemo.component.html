@@ -1,0 +1,465 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <!-- <div class="card">
+                <h5>Advanced</h5>
+                <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                              [multiple]="true" accept="image/*" [maxFileSize]="1000000">
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        </ul>
+                    </ng-template>
+                </p-fileUpload>
+    
+                <h5>Basic</h5>
+                <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onBasicUpload()"></p-fileUpload>
+    
+            </div> -->
+
+            <div class="row">
+                <div class="col-9">
+                    <strong>
+                        <h1><span style="font-weight: bold;">Carrier</span></h1>
+                    </strong>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p-toast />
+                    <p-toolbar styleClass="mb-4 gap-2">
+                        <ng-template pTemplate="left">
+
+                        </ng-template>
+
+                        <ng-template pTemplate="right">
+                            <button mat-flat-button
+                                style="border-radius: 15px; background-color: #16A34A; color: white;"
+                                (click)="openNew()">
+                                <mat-icon>add</mat-icon>
+                                New</button>
+
+                        </ng-template>
+                    </p-toolbar>
+                    <p-table #dt [value]="carrier" [rows]="10" [paginator]="true" [globalFilterFields]="[
+                        'client',
+                        'reference', 
+                        'user', 
+                        'load',
+                        'shipper',
+                        'weigth',
+                        'carrierLoad',
+                        'unitLoad',
+                        'typeLoad',
+                        'datePick',
+                        'timePick',
+                        'commentsPick',
+                        'email',
+                        'carrierUnload',
+                        'unitUnload',
+                        'dateDelivery',
+                        'timeDelivery',
+                        'commentDelivery'
+                        ]" [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" dataKey="id"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [showCurrentPageReport]="true">
+
+                        <ng-template pTemplate="caption">
+                            <div class="flex align-items-center justify-content-between">
+
+                                <span class="p-input-icon-left" style="width: 100%;">
+                                    <i class="pi pi-search"></i>
+                                    <input style="width: 100%;" pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Search..." />
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Company</th>
+                                <th>Representative</th>
+                                <th>Representative</th>
+                                <th>Bank</th>
+                                <th>CreditData</th>
+                                <th>Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>
+                                    {{product.company.name}}
+                                </td>
+
+                                <td>
+                                    {{ product.representative.name }}
+                                </td>
+                                <td>
+                                    {{ product.bank.name }}
+                                </td>
+                                <td>
+                                    {{product.drafterContact.name}}
+                                </td>
+                                <td>
+                                    {{product.creditData.amount}}
+                                </td>
+
+
+                                <td>
+                                    <div class="row">
+
+
+                                        <div class="col-4">
+                                            <button mat-mini-fab aria-label="Example icon button with a menu icon"
+                                                style="background-color: white; color: #16A34A;"
+                                                (click)="editQuotation(product)">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button mat-mini-fab aria-label="Example icon button with a menu icon"
+                                                style="background-color: white; color: rgb(255, 0, 0);"
+                                                (click)="delitePickup(pickup,$event)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<p-dialog header="Carrier" [modal]="true" [(visible)]="carrierDialog" [style]="{ width: '100rem' }">
+    <span class="p-text-secondary block mb-5">Update your information.</span>
+    <div class="grid">
+        <div class="col-12 md:col-6">
+            <p-card header="Company Details">
+                <label for="name" class="font-semibold w-6rem">Client</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.name"
+                        required autofocus />
+                </div>
+                <br>
+
+                <label for="name" class="font-semibold ">Social reason</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.socialR"
+                        required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">RFC</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.rfc"
+                        required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">Address</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.address"
+                        required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">Colony</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.colony"
+                        required autofocus />
+                </div>
+                <br><label for="name" class="font-semibold w-6rem">City</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.city"
+                        required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">State</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" style="width: 100%;" [(ngModel)]="companyDataEdit.state"
+                        required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">ZIP CODE</label>
+
+                <input type="text" pInputText id="unitLoad" style="width: 100%;" [(ngModel)]="companyDataEdit.cp"
+                    required autofocus />
+            </p-card>
+
+
+            <!-- <small class="p-error" *ngIf="submitted && !product.name">
+				Name is required.
+			</small> -->
+        </div>
+
+
+        <div class="col-12 md:col-6">
+            <p-card header="Drafter's Contact ">
+                <label for="name" class="font-semibold w-6rem">Name</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="drafterContactDataEdit.name"
+                     required autofocus />
+                </div>
+                <br>
+
+                <label for="name" class="font-semibold w-6rem">Email</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="drafterContactDataEdit.email"
+                     required autofocus />
+                </div>
+                <br>
+
+                <label for="name" class="font-semibold w-6rem">Phone</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="drafterContactDataEdit.phone"
+                     required autofocus />
+                </div>
+                <br>
+
+                <label for="name" class="font-semibold w-6rem">Post</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="drafterContactDataEdit.post"
+                     required autofocus />
+                </div>
+                <br>
+
+
+            </p-card>
+        </div>
+        <div class="col-12 md:col-6">
+            <p-card header="Legal Representative ">
+                <label for="name" class="font-semibold w-6rem">Name</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="representativeDataEdit.name"
+                     required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">Email</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="representativeDataEdit.email"
+                     required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold w-6rem">Phone</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="representativeDataEdit.phone"
+                     required autofocus />
+                </div>
+                <br>
+            </p-card>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <p-card header="Credit Data">
+                <label for="name" class="font-semibold">Amount of Credit: </label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="creditData.amount"
+                     required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold">Terms of Collection:</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="creditData.termsCollection"
+                     required autofocus />
+                </div>
+                
+                <br>
+                <label for="name" class="font-semibold">Currency</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="creditData.currency"
+                     required autofocus />
+                </div>
+                <br>
+            </p-card>
+        </div>
+        <div class="col-12 md:col-12">
+            <p-card header="Bank details">
+                <label for="name" class="font-semibold">Name of the Bank:  </label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="bankDataEdit.name"
+                     required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold">Country:</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="bankDataEdit.country"
+                     required autofocus />
+                </div>
+                
+                <br>
+                <label for="name" class="font-semibold">Currency</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="bankDataEdit.currency"
+                     required autofocus />
+                </div>
+                <br>
+
+                <label for="name" class="font-semibold">Bank account: </label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="bankDataEdit.bankAccount"
+                     required autofocus />
+                </div>
+                <br>
+
+                <label for="name" class="font-semibold">SWIFT CODE: </label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="bankDataEdit.swiftCode"
+                     required autofocus />
+                </div>
+                <br>
+                <label for="name" class="font-semibold">ROUTING / ABA:</label>
+                <div class="p-fluid">
+                    <input type="text" pInputText id="name" 
+                    style="width: 100%;" 
+                    [(ngModel)]="bankDataEdit.routingAba"
+                     required autofocus />
+                </div>
+                <br>
+            </p-card>
+        </div>
+
+    </div>
+
+    <div class="grid">
+        <div class="col-12 md:col-12">
+          <p-card header="Documents">
+            <p-toolbar styleClass="mb-4 gap-2">
+              <ng-template pTemplate="left"></ng-template>
+              <ng-template pTemplate="right">
+                <button mat-flat-button
+                  style="border-radius: 15px; background-color: #16A34A; color: white;"
+                  (click)="openNew()">
+                  <mat-icon>add</mat-icon>
+                  New
+                </button>
+              </ng-template>
+            </p-toolbar>
+      
+            <p-table #dt [value]="docData" [rows]="10" [paginator]="true" [globalFilterFields]="[
+              'name'
+            ]" 
+            [tableStyle]="{ 'min-width': '100%' }" [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
+      
+            [responsive]="true">
+      
+              <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                  <span class="p-input-icon-left"
+       style="width: 100%;">
+                    <i class="pi pi-search"></i>
+                    <input style="width: 100%;" pInputText type="text"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')"
+                      placeholder="Search..."
+       />
+                  </span>
+                </div>
+              </ng-template>
+      
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Name</th>
+                  <th>Action</th>
+                </tr>
+              </ng-template>
+      
+              <ng-template pTemplate="body" let-product>
+      
+                <tr>
+                  <td>{{product.name}}</td>
+    
+      
+                  <td class="text-center">
+                    <div class="row">
+                      <div class="col-4">
+
+                        <button mat-mini-fab aria-label="Delete pickup"
+                        style="background-color: white; color: #000000"
+                        (click)="editQuotation(product)">
+                        <i class="pi pi-eye" style="font-size: 1rem"></i>
+
+                        </button>
+                        
+                      </div>
+                      <div class="col-4">
+                        <button mat-mini-fab aria-label="Delete pickup"
+                            style="background-color: white; color: rgb(255, 0, 0);"
+                            (click)="delitePickup(pickup,$event)">
+                            <i class="pi pi-trash" style="font-size: 1rem"></i>
+
+                            </button>
+      
+                        <!-- <button mat-mini-fab aria-label="Delete pickup"
+                          style="background-color: white; color: rgb(255, 0, 0);"
+                          (click)="delitePickup(pickup,$event)">
+                          <mat-icon>delete</mat-icon>
+                        </button> -->
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+      
+            </p-table>
+
+      
+          </p-card>
+        </div>
+      </div>
+
+    <div class="flex justify-content-end gap-2">
+        <button mat-flat-button style="border-radius: 15px; background-color: #ff0000; color: white;">
+            Cancel</button>
+        <button mat-flat-button style="border-radius: 15px; background-color: #16A34A; color: white;">
+            Save</button>
+        <!-- <p-button label="Cancel" severity="secondary" (onClick)="quotationDialog = false" />
+		<p-button label="Save" (onClick)="quotationDialog = false" /> -->
+    </div>
+</p-dialog>
+<pdf-viewer 
+[src]="pdfFileName"
+[page]="1"
+
+>
+</pdf-viewer>
+
+<app-pdf-viewer *ngIf="showPdfViewer" pdfSrc="assets/pdfDummy/pdf.pdf"></app-pdf-viewer>

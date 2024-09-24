@@ -1,0 +1,61 @@
+<!-- <div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-1" 
+                        [routerLink]="['/erp/quotation']" 
+                        style="cursor: pointer;">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" >
+                        arrow_back_ios
+
+                    </mat-icon>
+                </div>
+                <div class="col-9">
+					<strong>
+						<h1><span style="font-weight: bold;">Quotation Edit: {{id}} </span></h1>
+					</strong>
+
+				</div>
+            </div>
+
+            <span class="p-text-secondary block mb-5">Update your information.</span>
+            <div class="grid">
+                <div class="col-6">
+                    <label for="name" class="font-semibold w-6rem">Date</label>
+                    <p-calendar  dateFormat="dd/mm/yy" 
+                                 [showIcon]="true"
+                                 [(ngModel)]="newDeliveryData[0].date"
+                                 readonlyInput="true"
+                                 
+                                 >
+                                 
+                    </p-calendar>
+                </div>
+    
+                <div class="col-6">
+                    <label for="name" class="font-semibold w-6rem">Time</label>
+                    <p-calendar 
+                    inputId="calendar-timeonly" 
+                    [(ngModel)]="newDeliveryData[0].time"
+                    [showIcon]="true"
+                    [timeOnly]="true" />
+                    
+                </div>
+            </div>
+            <div class="grid">
+                <div class="col-12">
+                    <label for="name" class="font-semibold w-6rem">Commets</label>
+                    <textarea 
+                        style="width: 100%;"
+                        rows="5"
+                        cols="30" 
+                        [(ngModel)]="newDeliveryData[0].comments"
+    
+                        pInputTextarea 
+                        >
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
